@@ -1,193 +1,282 @@
+# Deploying PrestaShop on AWS with Amazon EC2 & RDS
+
+Production-style deployment of **PrestaShop 8.2.1** using **Amazon EC2**, **Apache**, **PHP**, and **Amazon RDS (MySQL)**.
+
+![AWS](https://img.shields.io/badge/AWS-EC2%20%7C%20RDS-orange)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-26.04-E95420)
+![Apache](https://img.shields.io/badge/Apache-2.4-red)
+![PHP](https://img.shields.io/badge/PHP-8.5-777BB4)
+![MySQL](https://img.shields.io/badge/MySQL-8.4-blue)
+
 ---
 
-# Deploying PrestaShop on AWS (EC2 + Amazon RDS)
-
-> A production-style deployment of **PrestaShop 8.2.1** on **AWS EC2** with **Amazon RDS MySQL**, completed as part of a DevOps/System Administration technical assessment.
+## Architecture
 
 <img width="2720" height="1280" alt="prestashop_aws_architecture" src="https://github.com/user-attachments/assets/35798b04-0b36-4ffb-843f-e88574101b62" />
 
+This deployment follows a simple two-tier architecture:
+
+- Internet
+- Amazon EC2 (Ubuntu 26.04)
+  - Apache
+  - PHP 8.5
+  - PrestaShop 8.2.1
+- Amazon RDS (MySQL 8.4)
+- AWS Security Groups controlling traffic between EC2 and RDS
+
 ---
 
-## Background
+# Background
 
 I built this project as part of the final technical assessment for a DevOps/System Administration internship.
 
 The challenge was straightforward:
 
-> Deploy an e-commerce application on AWS and make it accessible over the internet.
+> Deploy an e-commerce application on AWS using a separate managed database while making the application publicly accessible.
 
-I decided to build the deployment the way it would typically be done in the cloud:
+I chose to implement the deployment using AWS best practices by separating the application and database tiers.
 
-* Application hosted on an EC2 instance
-* Database hosted separately on Amazon RDS
-* Communication secured through AWS Security Groups
-* Manual installation and troubleshooting throughout the deployment
+The deployment was completed successfully, although I later declined the opportunity after reviewing the employment terms. Rather than letting the work go to waste, I decided to document the entire deployment and publish it as part of my engineering portfolio.
 
-Although I later declined the opportunity because of the employment terms, I completed the assessment and published this repository as part of my engineering portfolio.
+---
+
+# Project Objectives
+
+- Deploy PrestaShop on Amazon EC2.
+- Host the database on Amazon RDS.
+- Configure secure communication between EC2 and RDS.
+- Install and configure Apache and PHP.
+- Troubleshoot deployment issues encountered during installation.
+- Document the deployment as an engineering case study.
 
 ---
 
 # AWS Services Used
 
-* Amazon EC2
-* Amazon RDS (MySQL)
-* Amazon VPC
-* Security Groups
-* IAM
+- Amazon EC2
+- Amazon RDS (MySQL)
+- Amazon VPC
+- Security Groups
+- IAM
 
 ---
 
 # Tech Stack
 
-### Cloud
+## Cloud
 
-* AWS EC2
-* AWS RDS
+- AWS EC2
+- Amazon RDS
 
-### Operating System
+## Operating System
 
-* Ubuntu 26.04 LTS
+- Ubuntu Server 26.04 LTS
 
-### Web Server
+## Web Server
 
-* Apache2
+- Apache2
 
-### Backend
+## Backend
 
-* PHP 8.5
+- PHP 8.5
 
-### Database
+## Database
 
-* Amazon RDS MySQL 8.4
+- Amazon RDS MySQL 8.4
 
-### Version Control
+## Version Control
 
-* Git
-* GitHub
+- Git
+- GitHub
 
-### Application
+## Application
 
-* PrestaShop 8.2.1
-
----
-
-# Deployment Process
-
-The deployment consisted of several stages.
-
-### 1. Provision AWS Infrastructure
-
-* Launch Ubuntu EC2 instance
-* Create Amazon RDS MySQL database
-* Configure Security Groups
-* Allow EC2 to communicate with RDS
+- PrestaShop 8.2.1
 
 ---
 
-### 2. Configure the Server
+# Repository Structure
+
+```text
+prestashop-on-aws/
+│
+├── README.md
+├── DEPLOYMENT.md
+├── TROUBLESHOOTING.md
+├── ARCHITECTURE.png
+├── screenshots/
+├── scripts/
+│   └── install.sh
+└── app/
+```
+
+---
+
+# Deployment Workflow
+
+## 1. Provision Infrastructure
+
+- Launch Ubuntu EC2 instance
+- Create Amazon RDS MySQL database
+- Configure Security Groups
+- Allow EC2 to communicate with RDS
+
+---
+
+## 2. Configure the Server
 
 Installed:
 
-* Apache2
-* PHP 8.5
-* Required PHP extensions
-* unzip
-* wget
-
----
-
-### 3. Download PrestaShop
-
-Downloaded PrestaShop 8.2.1 release manually from GitHub after discovering that the "latest" release link returned a 404.
-
----
-
-### 4. Deploy Application
-
-* Extract files
-* Configure Apache
-* Configure permissions
-* Connect to Amazon RDS
-* Complete web installer
-
----
-
-### 5. Verify Deployment
+- Apache2
+- PHP 8.5
+- PHP Extensions
+- unzip
+- wget
+- MySQL Client
 
 Verified:
 
-* Apache service
-* PHP installation
-* Database connectivity
-* Installer completion
-* Public accessibility
+- Apache running
+- PHP installed
+- Web server reachable
+
 ---
 
-# Key Skills Demonstrated
+## 3. Download PrestaShop
 
-* Linux Administration
-* Apache Configuration
-* PHP Installation
-* AWS EC2
-* Amazon RDS
-* MySQL Connectivity
-* Security Groups
-* Networking
-* Troubleshooting
-* Cloud Infrastructure
-* System Administration
+Downloaded PrestaShop manually from GitHub after discovering that the documented "latest" release download returned a **404 Not Found**.
+
+Resolved the issue by querying the GitHub Releases API to locate the correct versioned asset.
+
+---
+
+## 4. Deploy the Application
+
+- Extract archive
+- Configure Apache
+- Configure permissions
+- Enable mod_rewrite
+- Copy application into `/var/www/html`
+- Restart Apache
+
+---
+
+## 5. Configure Database
+
+Connected the EC2 instance to Amazon RDS using the MySQL client.
+
+Verified connectivity before completing the web installer.
+
+Configured the installer with:
+
+- Amazon RDS Endpoint
+- Database Name
+- Username
+- Password
+- Port 3306
+
+---
+
+## 6. Complete Installation
+
+Completed the PrestaShop installation wizard.
+
+Verified:
+
+- Apache
+- PHP
+- MySQL Connectivity
+- Installer completion
+- Store accessibility
+
+---
+
+# Results
+
+Deployment completed successfully.
+
+✅ Apache configured
+
+✅ PHP 8.5 installed
+
+✅ Amazon RDS connected
+
+✅ Remote database functioning
+
+✅ PrestaShop installed successfully
+
+✅ Store accessible through the public IP
+
+✅ Separate application and database tiers
+
+---
+
+# Skills Demonstrated
+
+- Linux Administration
+- Apache Configuration
+- PHP Installation
+- AWS EC2
+- Amazon RDS
+- MySQL Connectivity
+- Networking
+- Security Groups
+- Linux Permissions
+- Troubleshooting
+- Cloud Infrastructure
+- Technical Documentation
 
 ---
 
 # Future Improvements
 
-I plan to expand this project by adding:
+This project can be extended by implementing:
 
-* Docker
-* Docker Compose
-* Terraform
-* GitHub Actions
-* Nginx Reverse Proxy
-* Let's Encrypt SSL
-* CloudWatch Monitoring
-* Application Load Balancer
-* Amazon EKS deployment
-* Automated Infrastructure Provisioning
+- Docker
+- Docker Compose
+- Terraform
+- GitHub Actions CI/CD
+- Nginx Reverse Proxy
+- Let's Encrypt SSL
+- CloudWatch Monitoring
+- Application Load Balancer
+- Auto Scaling
+- Amazon EKS Deployment
 
 ---
 
 # Screenshots
 
-Future updates will include:
+The repository includes screenshots covering:
 
-* AWS Architecture
-* EC2 Dashboard
-* RDS Dashboard
-* Security Groups
-* PrestaShop Installer
-* Running Store
-* Apache Configuration
-* Terminal Commands
+- AWS Architecture
+- EC2 Instance
+- Amazon RDS
+- Security Groups
+- Apache Status
+- Terminal Commands
+- Installer
+- Running Store
 
 ---
 
 # Reflection
 
-What started as a technical assessment became an opportunity to practice deploying and troubleshooting a cloud-hosted application using AWS services.
+This project reinforced an important lesson:
 
-The most valuable part of this project wasn't getting PrestaShop running—it was diagnosing and resolving the issues that surfaced along the way. Those moments required understanding Linux, networking, cloud infrastructure, and application deployment rather than simply following documentation.
+Deployments rarely succeed perfectly on the first attempt.
+
+The most valuable experience came from troubleshooting unexpected issues rather than simply following documentation. Resolving GitHub download failures, storage limitations, Apache configuration issues, file permissions, and remote database connectivity strengthened my understanding of Linux system administration and AWS networking.
+
+Publishing this repository serves as a record of both the successful deployment and the engineering process behind it.
 
 ---
 
-## Author
+# Connect With Me
 
 **Samuel Ayodeji Bankole**
 
 Aspiring Cloud & DevOps Engineer
 
-* 💼 LinkedIn: *www.linkedin.com/in/classiq04*
-
-
----
-
-I think we can make this even stronger by adding **actual screenshots of your AWS console, EC2 instance, RDS configuration, Security Groups, terminal output, and the finished PrestaShop site**. A README with visuals feels like a mini case study and makes a much stronger impression on recruiters than text alone.
+- LinkedIn: https://www.linkedin.com/in/classiq04
+- GitHub: https://github.com/classiq04
