@@ -195,6 +195,9 @@ Verified:
 
 Deployment completed successfully.
 
+<img width="1920" height="1080" alt="Screenshot (270)" src="https://github.com/user-attachments/assets/d7bfca93-ac52-4f0f-bab0-dd60aefc00e9" />
+<img width="1920" height="1080" alt="Screenshot (271)" src="https://github.com/user-attachments/assets/80644691-af25-45d5-bd66-00fea609b314" />
+
 ✅ Apache configured
 
 ✅ PHP 8.5 installed
