@@ -299,7 +299,7 @@ This project reinforced several practical DevOps and cloud engineering concepts:
 * Read logs before guessing.
 * Security Groups are one of the first places to investigate networking issues.
 * Dynamic public IP addresses can interrupt SSH access when inbound rules are restricted.
-* HTTP and HTTPS are different protocols—SSL must be configured before HTTPS will work.
+* HTTP and HTTPS are different protocols SSL must be configured before HTTPS will work.
 * Managed databases improve security by separating the application and database tiers.
 * Small configuration mistakes can consume more time than major installation steps.
 * Cloud deployments rarely work perfectly on the first attempt, and methodical debugging is an essential engineering skill.
